@@ -3,10 +3,7 @@ package psql
 import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
-)
-
-const (
-	UserTable = "_user"
+	_ "github.com/lib/pq"
 )
 
 type Config struct {
@@ -14,8 +11,8 @@ type Config struct {
 	Port     string
 	Username string
 	Password string
-	DBName   string
-	SSLMode  string
+	DbName   string
+	SslMode  string
 }
 
 func NewPostgreSqlClient(cfg Config) (*sqlx.DB, error) {
@@ -23,7 +20,7 @@ func NewPostgreSqlClient(cfg Config) (*sqlx.DB, error) {
 		"postgres",
 		fmt.Sprintf(
 			"host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
-			cfg.Host, cfg.Port, cfg.Username, cfg.DBName, cfg.Password, cfg.SSLMode,
+			cfg.Host, cfg.Port, cfg.Username, cfg.DbName, cfg.Password, cfg.SslMode,
 		),
 	)
 

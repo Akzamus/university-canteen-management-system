@@ -5,12 +5,8 @@ import (
 	repoModel "github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql/user/model"
 )
 
-func ToUserFromRepo(user *repoModel.User) *model.User {
-	if user == nil {
-		return nil
-	}
-
-	return &model.User{
+func ToUser(user *repoModel.User) model.User {
+	return model.User{
 		UUID:     user.UUID,
 		Email:    user.Email,
 		Password: user.Password,
@@ -18,24 +14,16 @@ func ToUserFromRepo(user *repoModel.User) *model.User {
 	}
 }
 
-func ToUsersFromRepo(users *[]repoModel.User) *[]model.User {
-	if users == nil {
-		return nil
-	}
-
+func ToUsers(users *[]repoModel.User) []model.User {
 	servUsers := make([]model.User, len(*users))
 	for i, user := range *users {
-		servUsers[i] = *ToUserFromRepo(&user)
+		servUsers[i] = ToUser(&user)
 	}
-	return &servUsers
+	return servUsers
 }
 
-func ToUserFromService(user *model.User) *repoModel.User {
-	if user == nil {
-		return nil
-	}
-
-	return &repoModel.User{
+func ToRepoUser(user *model.User) repoModel.User {
+	return repoModel.User{
 		UUID:     user.UUID,
 		Email:    user.Email,
 		Password: user.Password,

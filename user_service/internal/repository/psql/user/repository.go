@@ -2,8 +2,6 @@ package user
 
 import (
 	"context"
-	"fmt"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql"
 	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql/user/converter"
 	"github.com/jmoiron/sqlx"
 
@@ -28,47 +26,39 @@ func NewRepository(db *sqlx.DB) *repository {
 	}
 }
 
-func (r *repository) FindById(_ context.Context, uuid string) (*model.User, error) {
-	var user repoModel.User
-	query := fmt.Sprintf("SELECT * FROM %s WHERE id = $1", psql.UserTable)
+func (r *repository) FindById(_ context.Context, uuid string) (model.User, error) {
+	user := repoModel.User{}
+	query := "SELECT * FROM _user WHERE id = $1"
 
-	if err := r.db.Get(&user, query, uuid); err != nil {
-		return nil, err
-	}
-
-	return converter.ToUserFromRepo(&user), nil
+	err := r.db.Get(&user, query, uuid)
+	return converter.ToUser(&user), err
 }
 
-func (r *repository) FindAll(_ context.Context) (*[]model.User, error) {
+func (r *repository) FindAll(_ context.Context) ([]model.User, error) {
 	var users []repoModel.User
-	query := fmt.Sprintf("SELECT * FROM %s LIMIT %1", psql.UserTable)
+	query := "SELECT * FROM _user LIMIT $1"
 
-	if err := r.db.Select(&users, query, rowLimit); err != nil {
-		return nil, err
-	}
-
-	return converter.ToUsersFromRepo(&users), nil
+	err := r.db.Select(&users, query, rowLimit)
+	return converter.ToUsers(&users), err
 }
 
-func (r *repository) Save(ctx context.Context, user *model.User) (*model.User, error) {
-	userRepo := converter.ToUserFromService(user)
+func (r *repository) Save(ctx context.Context, user model.User) (model.User, error) {
+	userRepo := converter.ToRepoUser(&user)
 
-	query := fmt.Sprintf("INSERT INTO %s (email, password, role) VALUES ($1, $2, $3) RETURNING *", psql.UserTable)
+	query := "INSERT INTO _user (email, password, role) VALUES ($1, $2, $3) RETURNING *"
 	params := []interface{}{userRepo.Email, userRepo.Password, userRepo.Role}
 
 	if userRepo.UUID != "" {
-		query = fmt.Sprintf("UPDATE %s SET email = $1, password = $2, role = $3 WHERE id = $4 RETURNING *", psql.UserTable)
+		query = "UPDATE _user SET email = $1, password = $2, role = $3 WHERE id = $4 RETURNING *"
 		params = append(params, userRepo.UUID)
 	}
 
-	if err := r.db.GetContext(ctx, userRepo, query, params...); err != nil {
-		return nil, err
-	}
-	return converter.ToUserFromRepo(userRepo), nil
+	err := r.db.GetContext(ctx, &userRepo, query, params...)
+	return converter.ToUser(&userRepo), err
 }
 
 func (r *repository) DeleteById(ctx context.Context, uuid string) error {
-	query := fmt.Sprintf("DELETE FROM %s WHERE id = $1", psql.UserTable)
+	query := "DELETE FROM _user WHERE id = $1"
 	_, err := r.db.ExecContext(ctx, query, uuid)
 	return err
 }
