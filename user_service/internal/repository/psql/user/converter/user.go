@@ -5,7 +5,7 @@ import (
 	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql/user/entity"
 )
 
-func ToModel(user *entity.User) model.User {
+func ToUserModel(user *entity.User) model.User {
 	return model.User{
 		Uuid:     user.Uuid,
 		Email:    user.Email,
@@ -14,15 +14,15 @@ func ToModel(user *entity.User) model.User {
 	}
 }
 
-func ToModels(users *[]entity.User) []model.User {
+func ToUserModelList(users *[]entity.User) []model.User {
 	servUsers := make([]model.User, len(*users))
 	for i, user := range *users {
-		servUsers[i] = ToModel(&user)
+		servUsers[i] = ToUserModel(&user)
 	}
 	return servUsers
 }
 
-func ToEntity(user *model.User) entity.User {
+func ToUserEntity(user *model.User) entity.User {
 	return entity.User{
 		Uuid:     user.Uuid,
 		Email:    user.Email,

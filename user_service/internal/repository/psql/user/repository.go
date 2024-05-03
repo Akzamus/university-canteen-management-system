@@ -30,7 +30,7 @@ func (r *repository) FindById(_ context.Context, uuid string) (model.User, error
 	query := "SELECT * FROM _user WHERE id = $1"
 
 	err := r.db.Get(&user, query, uuid)
-	return converter.ToModel(&user), err
+	return converter.ToUserModel(&user), err
 }
 
 func (r *repository) FindAll(_ context.Context) ([]model.User, error) {
@@ -38,11 +38,11 @@ func (r *repository) FindAll(_ context.Context) ([]model.User, error) {
 	query := "SELECT * FROM _user LIMIT $1"
 
 	err := r.db.Select(&users, query, rowLimit)
-	return converter.ToModels(&users), err
+	return converter.ToUserModelList(&users), err
 }
 
 func (r *repository) Save(ctx context.Context, user model.User) (model.User, error) {
-	userRepo := converter.ToEntity(&user)
+	userRepo := converter.ToUserEntity(&user)
 
 	query := "INSERT INTO _user (email, password, role) VALUES ($1, $2, $3) RETURNING *"
 	params := []interface{}{userRepo.Email, userRepo.Password, userRepo.Role}
@@ -53,7 +53,7 @@ func (r *repository) Save(ctx context.Context, user model.User) (model.User, err
 	}
 
 	err := r.db.GetContext(ctx, &userRepo, query, params...)
-	return converter.ToModel(&userRepo), err
+	return converter.ToUserModel(&userRepo), err
 }
 
 func (r *repository) DeleteById(ctx context.Context, uuid string) error {
