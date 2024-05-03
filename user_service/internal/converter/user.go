@@ -7,18 +7,16 @@ import (
 
 func ToUserResponseDto(user *model.User) dto.UserResponseDto {
 	return dto.UserResponseDto{
-		Uuid:     user.Uuid,
-		Email:    user.Email,
-		Password: user.Password,
-		Role:     string(user.Role),
+		Uuid:  user.Uuid,
+		Email: user.Email,
+		Role:  string(user.Role),
 	}
 }
 
 func ToUserModel(userDto *dto.UserRequestDto) model.User {
 	return model.User{
-		Email:    userDto.Email,
-		Password: userDto.Password,
-		Role:     model.Role(userDto.Role),
+		Email: userDto.Email,
+		Role:  model.Role(userDto.Role),
 	}
 }
 
