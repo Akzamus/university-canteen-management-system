@@ -2,20 +2,12 @@ package psql
 
 import (
 	"fmt"
+	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/config"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
-type Config struct {
-	Host     string
-	Port     string
-	Username string
-	Password string
-	DbName   string
-	SslMode  string
-}
-
-func NewPostgreSqlClient(cfg Config) (*sqlx.DB, error) {
+func NewClient(cfg config.DatabaseConfig) (*sqlx.DB, error) {
 	db, err := sqlx.Open(
 		"postgres",
 		fmt.Sprintf(
