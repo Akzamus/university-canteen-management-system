@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/joho/godotenv"
 	"os"
+	"strconv"
 )
 
 type AppConfig struct {
@@ -10,15 +10,28 @@ type AppConfig struct {
 	Server   ServerConfig
 }
 
-func LoadConfigFromEnv(path string) (AppConfig, error) {
-	err := godotenv.Load(path)
+func NewAppConfig() (AppConfig, error) {
+	dbPortStr := os.Getenv("DB_PORT")
+	dbPort, err := strconv.Atoi(dbPortStr)
+	if err != nil {
+		return AppConfig{}, err
+	}
+
+	httpPortStr := os.Getenv("HTTP_PORT")
+	httpPort, err := strconv.Atoi(httpPortStr)
+	if err != nil {
+		return AppConfig{}, err
+	}
+
+	httpTimeoutSecondsStr := os.Getenv("HTTP_TIMEOUT_SECONDS")
+	httpTimeoutSeconds, err := strconv.Atoi(httpTimeoutSecondsStr)
 	if err != nil {
 		return AppConfig{}, err
 	}
 
 	dbConfig := DatabaseConfig{
 		Host:     os.Getenv("DB_HOST"),
-		Port:     os.Getenv("DB_PORT"),
+		Port:     dbPort,
 		Username: os.Getenv("DB_USERNAME"),
 		Password: os.Getenv("DB_PASSWORD"),
 		DbName:   os.Getenv("DB_NAME"),
@@ -26,7 +39,8 @@ func LoadConfigFromEnv(path string) (AppConfig, error) {
 	}
 
 	serverConfig := ServerConfig{
-		HttpPort: os.Getenv("HTTP_PORT"),
+		HttpPort:           httpPort,
+		HttpTimeoutSeconds: httpTimeoutSeconds,
 	}
 
 	return AppConfig{

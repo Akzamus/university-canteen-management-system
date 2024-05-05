@@ -1,5 +1,6 @@
 package config
 
 type ServerConfig struct {
-	HttpPort string
+	HttpPort           int
+	HttpTimeoutSeconds int
 }
