@@ -1,0 +1,21 @@
+stages:
+  - build
+  - deploy
+
+build_job:
+  stage: build
+  image: docker:19.03.12
+  services:
+    - docker:19.03.12-dind
+  script:
+    - docker build -t my-university-canteen-service .
+    - docker push my-university-canteen-service
+
+deploy_job:
+  stage: deploy
+  image: docker:19.03.12
+  script:
+    - docker pull my-university-canteen-service
+    - docker run -d my-university-canteen-service
+  only:
+    - master
