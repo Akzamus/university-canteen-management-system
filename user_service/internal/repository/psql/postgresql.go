@@ -2,7 +2,7 @@ package psql
 
 import (
 	"fmt"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/config"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/config"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )

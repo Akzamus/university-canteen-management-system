@@ -1,8 +1,8 @@
 package converter
 
 import (
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/model"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql/user/entity"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/model"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/repository/psql/user/entity"
 )
 
 func ToUserModel(user *entity.User) model.User {

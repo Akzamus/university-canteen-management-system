@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/app"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/app"
 	"log"
 )
 

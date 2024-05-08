@@ -2,10 +2,10 @@ package user
 
 import (
 	"context"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/model"
-	def "github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql/user/converter"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql/user/entity"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/model"
+	def "github.com/Akzamus/university-canteen-management-system/user_service/internal/repository"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/repository/psql/user/converter"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/repository/psql/user/entity"
 	"github.com/jmoiron/sqlx"
 )
 
