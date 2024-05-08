@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository"
-	def "github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/service"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/repository"
+	def "github.com/Akzamus/university-canteen-management-system/user_service/internal/service"
 )
 
 var _ def.UserService = (*service)(nil)

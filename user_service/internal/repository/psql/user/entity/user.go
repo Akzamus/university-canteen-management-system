@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/model"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/model"
 )
 
 type User struct {

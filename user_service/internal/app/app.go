@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/config"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/config"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/joho/godotenv"

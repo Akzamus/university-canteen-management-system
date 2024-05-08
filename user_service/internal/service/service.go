@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/pkg/dto"
+	"github.com/Akzamus/university-canteen-management-system/user_service/pkg/dto"
 )
 
 type UserService interface {

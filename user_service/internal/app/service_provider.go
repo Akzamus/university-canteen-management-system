@@ -1,14 +1,14 @@
 package app
 
 import (
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/config"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql"
-	userRepository "github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/repository/psql/user"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/service"
-	userService "github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/service/user"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/transport/http/handler"
-	userHandler "github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/transport/http/handler/user"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/config"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/repository"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/repository/psql"
+	userRepository "github.com/Akzamus/university-canteen-management-system/user_service/internal/repository/psql/user"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/service"
+	userService "github.com/Akzamus/university-canteen-management-system/user_service/internal/service/user"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/transport/http/handler"
+	userHandler "github.com/Akzamus/university-canteen-management-system/user_service/internal/transport/http/handler/user"
 	"github.com/jmoiron/sqlx"
 	"log"
 )

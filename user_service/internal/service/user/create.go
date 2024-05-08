@@ -2,9 +2,9 @@ package user
 
 import (
 	"context"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/converter"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/utils/crypto/bcrypt"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/pkg/dto"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/converter"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/utils/crypto/bcrypt"
+	"github.com/Akzamus/university-canteen-management-system/user_service/pkg/dto"
 	"github.com/pkg/errors"
 )
 

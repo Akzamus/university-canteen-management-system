@@ -2,10 +2,10 @@ package user
 
 import (
 	"encoding/json"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/service"
-	def "github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/transport/http/handler"
-	responseUtils "github.com/Akzam/usuniversity-canteen-management-system/user_service/internal/utils/response"
-	"github.com/Akzam/usuniversity-canteen-management-system/user_service/pkg/dto"
+	"github.com/Akzamus/university-canteen-management-system/user_service/internal/service"
+	def "github.com/Akzamus/university-canteen-management-system/user_service/internal/transport/http/handler"
+	responseUtils "github.com/Akzamus/university-canteen-management-system/user_service/internal/utils/response"
+	"github.com/Akzamus/university-canteen-management-system/user_service/pkg/dto"
 	"github.com/go-chi/chi"
 	"net/http"
 )
