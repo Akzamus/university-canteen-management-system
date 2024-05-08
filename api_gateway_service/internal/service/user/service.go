@@ -23,9 +23,12 @@ func NewService(userServiceBaseUrl string) *service {
 }
 
 const (
-	getUserByIdPath = "/api/v1/users/%s"
-	getAllUsersPath = "/api/v1/users/"
-	createUserPath  = "/api/v1/users/"
+	getUserByIdPath           = "/api/v1/users/%s"
+	getAllUsersPath           = "/api/v1/users/"
+	createUserPath            = "/api/v1/users/"
+	updateUserPath            = "/api/v1/users/%s"
+	deleteUserByIdPath        = "/api/v1/users/%s"
+	verifyUserCredentialsPath = "/api/v1/users/verify"
 )
 
 func (s *service) GetUserByID(_ context.Context, userUuid string) (dto.UserResponseDto, error) {
@@ -72,8 +75,8 @@ func (s *service) GetAllUsers(_ context.Context) ([]dto.UserResponseDto, error) 
 	}
 }
 
-func (s *service) CreateUser(_ context.Context, user dto.UserRequestDto) (dto.UserResponseDto, error) {
-	resp, err := s.restClient.SendRequest(http.MethodPost, createUserPath, user)
+func (s *service) CreateUser(_ context.Context, userDto dto.UserRequestDto) (dto.UserResponseDto, error) {
+	resp, err := s.restClient.SendRequest(http.MethodPost, createUserPath, userDto)
 	if err != nil {
 		return dto.UserResponseDto{}, fmt.Errorf("failed to send request: %w", err)
 	}
@@ -92,10 +95,10 @@ func (s *service) CreateUser(_ context.Context, user dto.UserRequestDto) (dto.Us
 	}
 }
 
-func (s *service) UpdateUser(_ context.Context, user dto.UserRequestDto, uuid string) (dto.UserResponseDto, error) {
-	path := fmt.Sprintf("/%s", uuid)
+func (s *service) UpdateUser(_ context.Context, userDto dto.UserRequestDto, uuid string) (dto.UserResponseDto, error) {
+	path := fmt.Sprintf(updateUserPath, uuid)
 
-	resp, err := s.restClient.SendRequest(http.MethodPut, path, user)
+	resp, err := s.restClient.SendRequest(http.MethodPut, path, userDto)
 	if err != nil {
 		return dto.UserResponseDto{}, fmt.Errorf("failed to send request: %w", err)
 	}
@@ -115,7 +118,7 @@ func (s *service) UpdateUser(_ context.Context, user dto.UserRequestDto, uuid st
 }
 
 func (s *service) DeleteUserByID(_ context.Context, uuid string) error {
-	path := fmt.Sprintf("/%s", uuid)
+	path := fmt.Sprintf(deleteUserByIdPath, uuid)
 
 	resp, err := s.restClient.SendRequest(http.MethodDelete, path, nil)
 	if err != nil {
@@ -130,5 +133,27 @@ func (s *service) DeleteUserByID(_ context.Context, uuid string) error {
 		return fmt.Errorf("user not found")
 	default:
 		return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
+}
+
+func (s *service) VerifyUserCredentials(_ context.Context, userCredentialsDto dto.UserCredentialsRequestDto) (dto.UserResponseDto, error) {
+	resp, err := s.restClient.SendRequest(http.MethodPost, verifyUserCredentialsPath, userCredentialsDto)
+	if err != nil {
+		return dto.UserResponseDto{}, fmt.Errorf("failed to send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	switch resp.StatusCode {
+	case http.StatusOK:
+		var userResponse dto.UserResponseDto
+		err := json.NewDecoder(resp.Body).Decode(&userResponse)
+		if err != nil {
+			return dto.UserResponseDto{}, fmt.Errorf("failed to decode response body: %w", err)
+		}
+		return userResponse, nil
+	case http.StatusNotFound:
+		return dto.UserResponseDto{}, fmt.Errorf("incorrect email or password")
+	default:
+		return dto.UserResponseDto{}, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
 	}
 }

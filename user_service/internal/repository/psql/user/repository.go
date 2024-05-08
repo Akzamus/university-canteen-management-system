@@ -33,6 +33,14 @@ func (r *repository) FindById(_ context.Context, uuid string) (model.User, error
 	return converter.ToUserModel(&user), err
 }
 
+func (r *repository) FindByEmail(ctx context.Context, email string) (model.User, error) {
+	user := entity.User{}
+	query := "SELECT * FROM _user WHERE email = $1"
+
+	err := r.db.GetContext(ctx, &user, query, email)
+	return converter.ToUserModel(&user), err
+}
+
 func (r *repository) FindAll(_ context.Context) ([]model.User, error) {
 	var users []entity.User
 	query := "SELECT * FROM _user LIMIT $1"

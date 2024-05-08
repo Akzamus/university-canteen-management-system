@@ -11,3 +11,8 @@ type UserResponseDto struct {
 	Email string `json:"email"`
 	Role  string `json:"role"`
 }
+
+type UserCredentialsRequestDto struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}

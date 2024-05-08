@@ -75,6 +75,7 @@ func (a *App) initHttpServer(_ context.Context) error {
 	a.httpRouter.Use(middleware.Timeout(time.Duration(timeoutSeconds) * time.Second))
 
 	a.serviceProvider.UserHandler().RegisterRoutes(a.httpRouter)
+	a.serviceProvider.AuthHandler().RegisterRoutes(a.httpRouter)
 
 	return nil
 }

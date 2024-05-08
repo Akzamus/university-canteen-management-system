@@ -26,6 +26,7 @@ func (h *handler) RegisterRoutes(r chi.Router) {
 	r.Route("/api/v1/users", func(r chi.Router) {
 		r.Get("/", h.GetAllUsers)
 		r.Post("/", h.CreateUser)
+		r.Post("/verify", h.VerifyUserCredentials)
 		r.Route("/{userUUID}", func(r chi.Router) {
 			r.Get("/", h.GetUserByID)
 			r.Put("/", h.UpdateUser)
@@ -40,6 +41,22 @@ func (h *handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		responseUtils.RespondWithError(w, http.StatusNotFound, "User not found")
+		return
+	}
+
+	responseUtils.RespondWithJSON(w, http.StatusOK, response)
+}
+
+func (h *handler) VerifyUserCredentials(w http.ResponseWriter, r *http.Request) {
+	var request dto.UserCredentialsRequestDto
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		responseUtils.RespondWithError(w, http.StatusBadRequest, "Invalid request body")
+		return
+	}
+
+	response, err := h.userService.VerifyUserCredentials(r.Context(), request)
+	if err != nil {
+		responseUtils.RespondWithError(w, http.StatusNotFound, err.Error())
 		return
 	}
 

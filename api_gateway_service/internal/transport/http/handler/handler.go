@@ -11,5 +11,12 @@ type UserHandler interface {
 	CreateUser(w http.ResponseWriter, r *http.Request)
 	UpdateUser(w http.ResponseWriter, r *http.Request)
 	DeleteUserByID(w http.ResponseWriter, r *http.Request)
+	GetSelfInfo(w http.ResponseWriter, r *http.Request)
+	RegisterRoutes(r chi.Router)
+}
+
+type AuthHandler interface {
+	Register(w http.ResponseWriter, r *http.Request)
+	Authenticate(w http.ResponseWriter, r *http.Request)
 	RegisterRoutes(r chi.Router)
 }
