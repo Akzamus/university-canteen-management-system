@@ -3,3 +3,5 @@ module github.com/Akzamus/university-canteen-management-system/api_gateway_servi
 go 1.21.6
 
 require github.com/go-chi/chi v1.5.5
+
+require github.com/joho/godotenv v1.5.1

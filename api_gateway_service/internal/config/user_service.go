@@ -1,6 +1,7 @@
 package config
 
 type UserServiceConfig struct {
-	Host string
-	Port int
+	Protocol string
+	Host     string
+	Port     int
 }

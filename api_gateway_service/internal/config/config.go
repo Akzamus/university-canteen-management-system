@@ -31,8 +31,9 @@ func NewAppConfig() (AppConfig, error) {
 	}
 
 	userServiceConfig := UserServiceConfig{
-		Host: os.Getenv("USER_SERVICE_HOST"),
-		Port: userServicePort,
+		Protocol: os.Getenv("USER_SERVICE_PROTOCOL"),
+		Host:     os.Getenv("USER_SERVICE_HOST"),
+		Port:     userServicePort,
 	}
 
 	serverConfig := ServerConfig{
